@@ -1,0 +1,98 @@
+// ==========================================================================
+// SCSS ODOO 19 — POS INSTITUCIONAL ECUADOR
+// Paleta Oficial Odoo 19 Enterprise: #714B67 (Aubergine), #017E84 (Teal)
+// ==========================================================================
+
+$o-pos-aubergine: #714B67;
+$o-pos-aubergine-dark: #58374f;
+$o-pos-teal: #017E84;
+$o-pos-teal-hover: #006368;
+
+.pos {
+    --pos-primary: #{$o-pos-aubergine};
+    --pos-secondary: #{$o-pos-teal};
+
+    .pos-topheader {
+        background-color: var(--pos-primary) !important;
+        color: #FFFFFF !important;
+    }
+
+    .pos-badge-simulation {
+        background: #DC3545;
+        color: #FFFFFF;
+        font-weight: 800;
+        font-size: 0.65rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .order-container {
+        border-right: 1px solid #DEE2E6;
+
+        .orderline.selected {
+            background-color: rgba(113, 75, 103, 0.08) !important;
+            border-left: 4px solid var(--pos-primary);
+        }
+
+        .tax-badge-0 {
+            background: #E8F5E9;
+            color: #2E7D32;
+            font-size: 0.65rem;
+            padding: 0.1rem 0.35rem;
+            border-radius: 3px;
+            font-weight: 700;
+        }
+
+        .tax-badge-15 {
+            background: #E3F2FD;
+            color: #1565C0;
+            font-size: 0.65rem;
+            padding: 0.1rem 0.35rem;
+            border-radius: 3px;
+            font-weight: 700;
+        }
+    }
+
+    .button.pay {
+        background-color: var(--pos-secondary) !important;
+        color: #FFFFFF !important;
+        font-weight: 800;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: $o-pos-teal-hover !important;
+        }
+    }
+
+    .quick-cash-tender {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin: 0.5rem 0;
+
+        .btn-tender {
+            border: 1px solid #CBD5E1;
+            background: #FFFFFF;
+            border-radius: 4px;
+            padding: 0.35rem 0.65rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+
+            &:hover {
+                background: #F1F5F9;
+                border-color: var(--pos-primary);
+                color: var(--pos-primary);
+            }
+        }
+    }
+
+    .budget-traceability-drawer {
+        background: #F8F9FA;
+        border-top: 1px solid #E2E8F0;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+}

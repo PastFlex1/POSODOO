@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Secuencia para Depósitos Bancarios -->
+        <record id="seq_pos_deposito_bancario" model="ir.sequence">
+            <field name="name">Secuencia Depósito Bancario Institucional</field>
+            <field name="code">pos.deposito.bancario</field>
+            <field name="prefix">DEP-%(range_year)s-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- 1. CIUDADANOS / CONTRIBUYENTES DEMO ECUADOR -->
+        <record id="partner_maria_morales" model="res.partner">
+            <field name="name">María Elena Morales Guamán</field>
+            <field name="tipo_identificacion">cedula</field>
+            <field name="vat">1718293041</field>
+            <field name="tipo_contribuyente">natural</field>
+            <field name="email">maria.morales@correo-demo.ec</field>
+            <field name="street">Av. 10 de Agosto N24-112 y Cordero, Quito</field>
+            <field name="phone">0984712390</field>
+        </record>
+
+        <record id="partner_constructora_andina" model="res.partner">
+            <field name="name">Constructora Andina &amp; Asociados Cía. Ltda.</field>
+            <field name="tipo_identificacion">ruc</field>
+            <field name="vat">1792345678001</field>
+            <field name="tipo_contribuyente">juridica</field>
+            <field name="email">tributario@andina-demo.ec</field>
+            <field name="street">Av. Shyris N36-120 y Naciones Unidas, Quito</field>
+            <field name="phone">022948102</field>
+        </record>
+
+        <record id="partner_luis_chimbo" model="res.partner">
+            <field name="name">Luis Fernando Chimbo Quishpe</field>
+            <field name="tipo_identificacion">cedula</field>
+            <field name="vat">1003482910</field>
+            <field name="tipo_contribuyente">natural</field>
+            <field name="es_tercera_edad">True</field>
+            <field name="email">luis.chimbo@correo-demo.ec</field>
+            <field name="street">Calle Bolívar 5-42 y Sucre, Ibarra</field>
+            <field name="phone">0978291034</field>
+        </record>
+
+        <!-- 2. TRÁMITES / CONCEPTOS INSTITUCIONALES DEMO -->
+        <record id="product_con_001" model="product.product">
+            <field name="name">Emisión de Certificado de No Adeudar</field>
+            <field name="list_price">5.00</field>
+            <field name="available_in_pos">True</field>
+            <field name="codigo_institucional">CON-001</field>
+            <field name="categoria_pos_institucional">TASAS</field>
+            <field name="partida_presupuestaria">13.01.08.01 Tasas y Derechos Administrativos</field>
+            <field name="cuenta_contable_institucional">6.1.3.05 Ingresos por Certificaciones y Copias</field>
+            <field name="unidad_responsable">Dirección Financiera / Rentas</field>
+            <field name="tratamiento_tributario">IVA_0</field>
+        </record>
+
+        <record id="product_con_002" model="product.product">
+            <field name="name">Tasa de Habilitación y Control de Actividades Económicas</field>
+            <field name="list_price">45.00</field>
+            <field name="available_in_pos">True</field>
+            <field name="codigo_institucional">CON-002</field>
+            <field name="categoria_pos_institucional">TASAS</field>
+            <field name="partida_presupuestaria">13.01.08.02 Patentes y Habilitación</field>
+            <field name="cuenta_contable_institucional">6.1.3.02 Ingresos por Tasas Administrativas</field>
+            <field name="unidad_responsable">Dirección de Planificación y Control Urbano</field>
+            <field name="tratamiento_tributario">IVA_0</field>
+        </record>
+
+        <record id="product_con_003" model="product.product">
+            <field name="name">Inspección Técnica de Seguridad y Diagnóstico Ambiental</field>
+            <field name="list_price">40.00</field>
+            <field name="available_in_pos">True</field>
+            <field name="codigo_institucional">CON-003</field>
+            <field name="categoria_pos_institucional">INSPECCIONES</field>
+            <field name="partida_presupuestaria">13.01.08.04 Servicios Técnicos Especializados</field>
+            <field name="cuenta_contable_institucional">6.1.3.04 Ingresos por Servicios Técnicos y Peritajes</field>
+            <field name="unidad_responsable">Dirección de Gestión Ambiental</field>
+            <field name="tratamiento_tributario">IVA_15</field>
+        </record>
+
+        <record id="product_con_005" model="product.product">
+            <field name="name">Copias Certificadas y Planimetría Oficial</field>
+            <field name="list_price">8.00</field>
+            <field name="available_in_pos">True</field>
+            <field name="codigo_institucional">CON-005</field>
+            <field name="categoria_pos_institucional">SERVICIOS</field>
+            <field name="partida_presupuestaria">13.01.08.05 Reproducción y Cartografía</field>
+            <field name="cuenta_contable_institucional">6.1.3.05 Ingresos por Certificaciones y Copias</field>
+            <field name="unidad_responsable">Dirección de Catastro y Avalúos</field>
+            <field name="tratamiento_tributario">EXENTO</field>
+        </record>
+
+        <record id="product_con_007" model="product.product">
+            <field name="name">Alquiler de Espacio Auditorio Institucional</field>
+            <field name="list_price">80.00</field>
+            <field name="available_in_pos">True</field>
+            <field name="codigo_institucional">CON-007</field>
+            <field name="categoria_pos_institucional">ARRIENDOS</field>
+            <field name="partida_presupuestaria">14.02.01.01 Arrendamiento de Bienes Públicos</field>
+            <field name="cuenta_contable_institucional">6.1.4.01 Ingresos por Arrendamiento de Bienes</field>
+            <field name="unidad_responsable">Dirección Administrativa</field>
+            <field name="tratamiento_tributario">IVA_15</field>
+        </record>
+
+        <record id="product_con_008" model="product.product">
+            <field name="name">Tasa de Habilitación (50% Tercera Edad Autorizada)</field>
+            <field name="list_price">60.00</field>
+            <field name="available_in_pos">True</field>
+            <field name="codigo_institucional">CON-008</field>
+            <field name="categoria_pos_institucional">TASAS</field>
+            <field name="partida_presupuestaria">13.01.08.02 Patentes y Habilitación</field>
+            <field name="cuenta_contable_institucional">6.1.3.02 Ingresos por Tasas Administrativas</field>
+            <field name="unidad_responsable">Dirección Financiera / Beneficios de Ley</field>
+            <field name="tratamiento_tributario">IVA_0</field>
+            <field name="aplica_exoneracion_tercera_edad">True</field>
+            <field name="porcentaje_rebaja_autorizada">50.0</field>
+            <field name="motivo_exoneracion">Resolución Adm. N° RES-EXO-2026-042 (Tercera Edad)</field>
+        </record>
+    </data>
+</odoo>

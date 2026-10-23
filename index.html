@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Odoo POS — Facturación y Recaudación Institucional (Ecuador)</title>
+  
+  <!-- Favicon SVG Odoo Institucional -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='8' fill='%23714B67'/%3E%3Cpath d='M18 6L7 11V19C7 25.8 11.7 32 18 33.5C24.3 32 29 25.8 29 19V11L18 6Z' fill='%23017E84' stroke='%23FFF' stroke-width='1.2'/%3E%3Cpath d='M14 19L17 22L23 16' stroke='%23FFFFFF' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5.3.3 CSS (CDN con respaldo local) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Bootstrap Icons (CDN con respaldo local) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+  
+  <!-- Odoo POS & Design System Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. BANNER OBLIGATORIO DE PROTOTIPO (SRI DEMO)
+       ========================================================================= -->
+  <aside class="proto-top-banner" role="status" aria-label="Aviso de demostración institucional">
+    <div class="banner-inner">
+      <div class="banner-tag">
+        <span class="badge-sim">SIMULACIÓN INSTITUCIONAL</span>
+        <span class="banner-msg">
+          <strong>DEMOSTRACIÓN — SIN VALIDEZ TRIBUTARIA:</strong> Prototipo funcional POS Odoo para atención en ventanilla del Estado ecuatoriano.
+        </span>
+      </div>
+      <div class="banner-right-tools">
+        <button id="btn-reset-seed" class="btn-tool-banner" title="Restablecer datos semilla">
+          <i class="bi bi-arrow-counterclockwise"></i>
+          Restablecer Demostración
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       2. ODOO ENTERPRISE TOP NAVBAR (APP DRAWER & MODULES SWITCHER)
+       ========================================================================= -->
+  <header class="odoo-top-navbar">
+    <div class="odoo-nav-left">
+      <!-- 9-dots Odoo App Drawer Icon -->
+      <button class="odoo-app-switcher-btn" id="btn-toggle-sidebar" title="Menú de Aplicaciones Odoo">
+        <i class="bi bi-grid-3x3-gap-fill"></i>
+      </button>
+
+      <!-- Brand -->
+      <a href="#" class="odoo-brand" id="brand-home-link">
+        <div class="odoo-brand-logo">
+          <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+            <rect width="36" height="36" rx="8" fill="#58374f"/>
+            <path d="M18 6L7 11V19C7 25.8 11.7 32 18 33.5C24.3 32 29 25.8 29 19V11L18 6Z" fill="#017E84" stroke="#FFF" stroke-width="1.2"/>
+            <path d="M14 19L17 22L23 16" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <span class="odoo-brand-title">Odoo POS</span>
+          <span class="odoo-brand-subtitle">Ventanilla Institucional</span>
+        </div>
+      </a>
+
+      <!-- Odoo Modules Bar -->
+      <nav class="d-none d-lg-block" aria-label="Módulos Odoo">
+        <ul class="odoo-modules-nav" id="odoo-top-modules-bar">
+          <li>
+            <button class="odoo-module-link active" data-module="pos">
+              <i class="bi bi-shop"></i> Punto de Venta
+            </button>
+          </li>
+          <li>
+            <button class="odoo-module-link" data-module="comprobantes">
+              <i class="bi bi-file-earmark-text"></i> Facturación
+            </button>
+          </li>
+          <li>
+            <button class="odoo-module-link" data-module="proformas">
+              <i class="bi bi-file-earmark-spreadsheet"></i> Proformas
+            </button>
+          </li>
+          <li>
+            <button class="odoo-module-link" data-module="tesoreria_cierres">
+              <i class="bi bi-bank"></i> Tesorería
+            </button>
+          </li>
+          <li>
+            <button class="odoo-module-link" data-module="contabilidad_auditoria">
+              <i class="bi bi-journal-check"></i> Contabilidad
+            </button>
+          </li>
+          <li>
+            <button class="odoo-module-link" data-module="apertura">
+              <i class="bi bi-cash-stack"></i> Caja / Sesión
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Right Controls -->
+      <!-- Odoo Backend Status Indicator & Quick Connector -->
+      <button class="btn btn-sm btn-outline-light d-flex align-items-center gap-1 py-1 px-2" id="btn-toggle-odoo-backend" title="Configurar conexión con Odoo 19 Backend" style="font-size: 0.72rem; border-color: rgba(255,255,255,0.25);">
+        <span class="odoo-state-dot" id="dot-odoo-backend" style="background: #fbbf24; width: 7px; height: 7px;"></span>
+        <span id="lbl-odoo-backend">Odoo 19: Simulado</span>
+      </button>
+
+      <div class="odoo-session-pill d-none d-md-flex">
+        <i class="bi bi-pc-display text-white-50"></i>
+        <strong id="hdr-caja-pto">Caja 01 • Pto. 001-001</strong>
+      </div>
+
+      <div class="odoo-session-pill font-mono d-none d-sm-flex" id="hdr-clock">
+        --:--:--
+      </div>
+
+      <div class="odoo-badge-state open" id="hdr-caja-status">
+        <span class="odoo-state-dot"></span> ABIERTA
+      </div>
+
+      <!-- Role Selector -->
+      <div class="d-flex align-items-center">
+        <select id="select-global-role" class="odoo-role-select" aria-label="Cambiar Rol Odoo">
+          <option value="cajero" selected>Vista: Cajero (Ventanilla)</option>
+          <option value="tesorero">Vista: Tesorero (Supervisión)</option>
+          <option value="contador">Vista: Contador (Contabilidad)</option>
+        </select>
+      </div>
+
+      <!-- User Chip -->
+      <div class="odoo-user-chip" title="Usuario activo">
+        <div class="odoo-avatar" id="hdr-user-avatar">AP</div>
+        <div class="d-none d-xl-block" style="line-height: 1.1;">
+          <div class="fw-bold" style="font-size: 0.78rem;" id="hdr-user-name">Alex Palma</div>
+          <div class="text-white-50" style="font-size: 0.65rem;" id="hdr-user-role">Cajero Ventanilla</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       3. CONTENEDOR PRINCIPAL: MENÚ LATERAL + ÁREA DE TRABAJO
+       ========================================================================= -->
+  <div class="pos-app-layout">
+    
+    <!-- Menú Lateral (Submódulos / Navegación administrativa) -->
+    <nav class="pos-sidebar hidden" id="pos-sidebar-panel" aria-label="Navegación de módulos">
+      <div class="sidebar-section-title" id="sb-section-title">MÓDULO DE CAJA</div>
+      <ul class="sidebar-nav-list" id="sidebar-nav">
+        <!-- Generado dinámicamente según el rol -->
+      </ul>
+
+      <div class="sidebar-bottom-card">
+        <div class="sb-card-row">
+          <span class="sb-card-lbl">Moneda Oficial</span>
+          <span class="sb-card-val">USD ($)</span>
+        </div>
+        <div class="sb-card-row">
+          <span class="sb-card-lbl">Diseño</span>
+          <span class="sb-card-val text-success">Odoo + Bootstrap 5</span>
+        </div>
+        <div class="sb-card-footer">
+          Atajos: <strong>F2</strong> Nuevo • <strong>F4</strong> Pagar
+        </div>
+      </div>
+    </nav>
+
+    <!-- Área de Trabajo Principal Odoo POS -->
+    <main class="pos-workspace" id="pos-main-container" tabindex="-1">
+      <!-- Renderizado dinámico de vistas -->
+    </main>
+
+  </div>
+
+  <!-- =========================================================================
+       4. MODALES OPERATIVOS (BOOTSTRAP 5 & ODOO THEME)
+       ========================================================================= -->
+
+  <!-- MODAL: Apertura de Caja -->
+  <div class="modal-backdrop-custom hidden" id="modal-apertura" role="dialog" aria-modal="true" aria-labelledby="modal-apertura-title">
+    <div class="modal-dialog-custom modal-sm">
+      <div class="modal-header-custom">
+        <div class="d-flex align-items-center gap-2">
+          <div class="card-icon-badge">
+            <i class="bi bi-box-arrow-in-right"></i>
+          </div>
+          <div>
+            <h6 id="modal-apertura-title" class="mb-0 fw-bold">Apertura Diaria de Caja</h6>
+            <small class="text-muted" style="font-size: 0.72rem;">Turno operativo y fondo de sencillo</small>
+          </div>
+        </div>
+        <button type="button" class="btn-close" data-close="modal-apertura" aria-label="Cerrar"></button>
+      </div>
+
+      <div class="modal-body-custom">
+        <div class="mb-2">
+          <label class="form-label text-muted fw-bold" style="font-size: 0.72rem;">Caja Asignada</label>
+          <input type="text" id="ap-caja-name" value="Caja 01 - Ventanilla Principal" readonly class="form-control form-control-sm bg-light">
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-6">
+            <label class="form-label text-muted fw-bold" style="font-size: 0.72rem;">Punto Emisión</label>
+            <input type="text" id="ap-pto-emision" value="001-001" readonly class="form-control form-control-sm bg-light font-mono">
+          </div>
+          <div class="col-6">
+            <label class="form-label text-muted fw-bold" style="font-size: 0.72rem;">Cajero</label>
+            <input type="text" id="ap-cajero" value="Alex Palma" readonly class="form-control form-control-sm bg-light">
+          </div>
+        </div>
+        <div class="mb-2">
+          <label class="form-label text-muted fw-bold" style="font-size: 0.72rem;">Fecha y Hora</label>
+          <input type="text" id="ap-fecha-hora" readonly class="form-control form-control-sm bg-light font-mono">
+        </div>
+        <div class="mb-3">
+          <label for="ap-fondo-inicial" class="form-label fw-bold text-dark" style="font-size: 0.78rem;">Fondo Inicial de Sencillo (USD) *</label>
+          <div class="input-group">
+            <span class="input-group-text fw-bold">$</span>
+            <input type="number" id="ap-fondo-inicial" step="0.01" min="0" value="50.00" class="form-control font-mono fw-bold fs-5 text-success" required>
+          </div>
+          <small class="text-muted" style="font-size: 0.68rem;">Efectivo físico entregado para cambio o sencillo.</small>
+        </div>
+        <div>
+          <label for="ap-obs" class="form-label text-muted fw-bold" style="font-size: 0.72rem;">Observación de Apertura</label>
+          <textarea id="ap-obs" rows="2" class="form-control form-control-sm" placeholder="Ej. Precinto verificado, inicio de jornada regular."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer-custom">
+        <button class="btn btn-sm btn-outline-secondary" data-close="modal-apertura">Cancelar</button>
+        <button class="btn btn-sm text-white fw-bold" style="background: var(--odoo-primary);" id="btn-submit-apertura">
+          <i class="bi bi-check2"></i> Efectuar Apertura
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Confirmación Previa de Cobro / Liquidación -->
+  <div class="modal-backdrop-custom hidden" id="modal-confirm-checkout" role="dialog" aria-modal="true" aria-labelledby="modal-confirm-title">
+    <div class="modal-dialog-custom modal-lg">
+      <div class="modal-header-custom">
+        <div class="d-flex align-items-center gap-2">
+          <div class="card-icon-badge text-success" style="background: var(--odoo-secondary-light); color: var(--odoo-secondary);">
+            <i class="bi bi-shield-check fs-5"></i>
+          </div>
+          <div>
+            <h6 id="modal-confirm-title" class="mb-0 fw-bold">Confirmar Liquidación y Cobro Odoo</h6>
+            <small class="text-muted" style="font-size: 0.72rem;">Verifique los importes antes de emitir y asentar el registro</small>
+          </div>
+        </div>
+        <button type="button" class="btn-close" data-close="modal-confirm-checkout" aria-label="Cerrar"></button>
+      </div>
+
+      <div class="modal-body-custom" id="modal-confirm-body">
+        <!-- Contenido dinámico generado por JS -->
+      </div>
+
+      <div class="modal-footer-custom">
+        <button class="btn btn-sm btn-outline-secondary" data-close="modal-confirm-checkout">Regresar / Corregir</button>
+        <button class="btn btn-sm text-white fw-bold" style="background: var(--odoo-secondary);" id="btn-confirm-final-action">
+          <i class="bi bi-check-circle"></i> <span id="btn-confirm-action-label">Facturar y Cobrar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Comprobante Oficial Imprimible (Receipt Odoo POS) -->
+  <div class="modal-backdrop-custom hidden" id="modal-ticket" role="dialog" aria-modal="true" aria-labelledby="modal-ticket-title">
+    <div class="modal-dialog-custom modal-sm" style="max-width: 480px;">
+      <div class="modal-header-custom no-print">
+        <div class="d-flex align-items-center gap-2">
+          <div class="card-icon-badge" style="background: var(--odoo-primary-light); color: var(--odoo-primary);">
+            <i class="bi bi-receipt"></i>
+          </div>
+          <div>
+            <h6 id="modal-ticket-title" class="mb-0 fw-bold">Comprobante de Recaudación</h6>
+            <small class="text-muted" style="font-size: 0.72rem;">Ticket emitido en ventanilla</small>
+          </div>
+        </div>
+        <button type="button" class="btn-close" data-close="modal-ticket" aria-label="Cerrar"></button>
+      </div>
+
+      <div class="modal-body-custom p-2" style="background: #0B0D13;">
+        <article class="official-ticket-paper" id="official-ticket-paper">
+          <!-- Inyectado por JS -->
+        </article>
+      </div>
+
+      <div class="modal-footer-custom no-print">
+        <button class="btn btn-sm btn-outline-secondary" data-close="modal-ticket">Cerrar</button>
+        <button class="btn btn-sm btn-light border fw-bold" id="btn-ticket-nueva-atencion">
+          <i class="bi bi-plus-circle"></i> Nueva Atención (F2)
+        </button>
+        <button class="btn btn-sm text-white fw-bold" style="background: var(--odoo-primary);" id="btn-ticket-imprimir">
+          <i class="bi bi-printer"></i> Imprimir Ticket
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Proforma / Cotización Oficial Imprimible -->
+  <div class="modal-backdrop-custom hidden" id="modal-proforma-ticket" role="dialog" aria-modal="true" aria-labelledby="modal-proforma-title">
+    <div class="modal-dialog-custom modal-sm" style="max-width: 500px;">
+      <div class="modal-header-custom no-print">
+        <div class="d-flex align-items-center gap-2">
+          <div class="card-icon-badge" style="background: #E8F4F8; color: #0288D1;">
+            <i class="bi bi-file-earmark-text"></i>
+          </div>
+          <div>
+            <h6 id="modal-proforma-title" class="mb-0 fw-bold">Cotización Previa / Proforma</h6>
+            <small class="text-muted" style="font-size: 0.72rem;">Documento informativo para el contribuyente</small>
+          </div>
+        </div>
+        <button type="button" class="btn-close" data-close="modal-proforma-ticket" aria-label="Cerrar"></button>
+      </div>
+
+      <div class="modal-body-custom p-2" style="background: #0B0D13;">
+        <article class="official-ticket-paper" id="proforma-ticket-paper">
+          <!-- Inyectado por JS -->
+        </article>
+      </div>
+
+      <div class="modal-footer-custom no-print">
+        <button class="btn btn-sm btn-outline-secondary" data-close="modal-proforma-ticket">Cerrar</button>
+        <button class="btn btn-sm btn-outline-primary fw-bold" id="btn-proforma-imprimir">
+          <i class="bi bi-printer"></i> Imprimir
+        </button>
+        <button class="btn btn-sm text-white fw-bold" style="background: var(--odoo-secondary);" id="btn-proforma-convertir-directo">
+          <i class="bi bi-arrow-right-circle"></i> Facturar y Cobrar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Borradores Guardados (Órdenes en Espera) -->
+  <div class="modal-backdrop-custom hidden" id="modal-drafts" role="dialog" aria-modal="true" aria-labelledby="modal-drafts-title">
+    <div class="modal-dialog-custom">
+      <div class="modal-header-custom">
+        <div class="d-flex align-items-center gap-2">
+          <div class="card-icon-badge" style="background: #FFF3E0; color: #E65100;">
+            <i class="bi bi-clock-history"></i>
+          </div>
+          <div>
+            <h6 id="modal-drafts-title" class="mb-0 fw-bold">Órdenes / Borradores en Espera</h6>
+            <small class="text-muted" style="font-size: 0.72rem;">Atenciones en pausa para recuperar y continuar</small>
+          </div>
+        </div>
+        <button type="button" class="btn-close" data-close="modal-drafts" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body-custom" id="drafts-list-body">
+        <!-- Inyectado por JS -->
+      </div>
+      <div class="modal-footer-custom">
+        <button class="btn btn-sm btn-outline-secondary" data-close="modal-drafts">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Solicitar Reversión Formal de Operación -->
+  <div class="modal-backdrop-custom hidden" id="modal-reversion" role="dialog" aria-modal="true" aria-labelledby="modal-rev-title">
+    <div class="modal-dialog-custom modal-sm">
+      <div class="modal-header-custom">
+        <div class="d-flex align-items-center gap-2">
+          <div class="card-icon-badge" style="background: #F8D7DA; color: #842029;">
+            <i class="bi bi-exclamation-triangle"></i>
+          </div>
+          <div>
+            <h6 id="modal-rev-title" class="mb-0 fw-bold">Solicitar Reversión</h6>
+            <small class="text-muted" style="font-size: 0.72rem;">Control de auditoría y supervisión de Tesorería</small>
+          </div>
+        </div>
+        <button type="button" class="btn-close" data-close="modal-reversion" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body-custom">
+        <div class="p-2 rounded bg-light border" id="rev-target-info">
+          <!-- Inyectado por JS -->
+        </div>
+        <div class="mt-3">
+          <label for="rev-motivo-input" class="form-label fw-bold" style="font-size: 0.78rem;">Justificación Administrativa *</label>
+          <textarea id="rev-motivo-input" rows="3" class="form-control form-control-sm" placeholder="Indique la justificación (ej. Duplicidad, desistimiento de trámite antes de ejecución)." required></textarea>
+        </div>
+      </div>
+      <div class="modal-footer-custom">
+        <button class="btn btn-sm btn-outline-secondary" data-close="modal-reversion">Cancelar</button>
+        <button class="btn btn-sm btn-danger fw-bold" id="btn-submit-solicitud-reversion">
+          <i class="bi bi-send"></i> Enviar a Tesorería
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Registrar Depósito Bancario (Tesorero) -->
+  <div class="modal-backdrop-custom hidden" id="modal-deposito" role="dialog" aria-modal="true" aria-labelledby="modal-dep-title">
+    <div class="modal-dialog-custom">
+      <div class="modal-header-custom">
+        <div class="d-flex align-items-center gap-2">
+          <div class="card-icon-badge" style="background: var(--odoo-primary-light); color: var(--odoo-primary);">
+            <i class="bi bi-bank"></i>
+          </div>
+          <div>
+            <h6 id="modal-dep-title" class="mb-0 fw-bold">Registrar Depósito Bancario</h6>
+            <small class="text-muted" style="font-size: 0.72rem;">Bancarización de efectivo físico en Cuenta Rotativa</small>
+          </div>
+        </div>
+        <button type="button" class="btn-close" data-close="modal-deposito" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body-custom">
+        <div class="mb-2">
+          <label for="dep-banco-sel" class="form-label fw-bold text-muted" style="font-size: 0.72rem;">Entidad Bancaria Depositaria *</label>
+          <select id="dep-banco-sel" class="form-select form-select-sm">
+            <option value="Banco Central del Ecuador (BCE) - Cta. Rotativa Única">Banco Central del Ecuador (BCE) - Cta. Rotativa Única</option>
+            <option value="BanEcuador B.P. - Cuenta Recaudadora">BanEcuador B.P. - Cuenta Recaudadora</option>
+            <option value="Banco del Pacífico - Cta. Recaudación">Banco del Pacífico - Cta. Recaudación</option>
+            <option value="Banco Pichincha - Cta. Corriente Institucional">Banco Pichincha - Cta. Corriente Institucional</option>
+          </select>
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-7">
+            <label for="dep-papeleta-num" class="form-label fw-bold text-muted" style="font-size: 0.72rem;">Nº de Papeleta / Depósito *</label>
+            <input type="text" id="dep-papeleta-num" placeholder="DEP-BCE-2026-90412" class="form-control form-control-sm font-mono" required>
+          </div>
+          <div class="col-5">
+            <label for="dep-monto-val" class="form-label fw-bold text-dark" style="font-size: 0.72rem;">Monto (USD) *</label>
+            <div class="input-group input-group-sm">
+              <span class="input-group-text">$</span>
+              <input type="number" id="dep-monto-val" step="0.01" min="0.01" class="form-control font-mono fw-bold" required>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2">
+          <label for="dep-fecha-val" class="form-label fw-bold text-muted" style="font-size: 0.72rem;">Fecha y Hora de Depósito</label>
+          <input type="datetime-local" id="dep-fecha-val" class="form-control form-control-sm font-mono bg-light">
+        </div>
+        <div>
+          <label for="dep-obs-val" class="form-label fw-bold text-muted" style="font-size: 0.72rem;">Observación de Remesa</label>
+          <textarea id="dep-obs-val" rows="2" class="form-control form-control-sm" placeholder="Ej. Depósito de recaudación en efectivo de la jornada de ventanilla."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer-custom">
+        <button class="btn btn-sm btn-outline-secondary" data-close="modal-deposito">Cancelar</button>
+        <button class="btn btn-sm text-white fw-bold" style="background: var(--odoo-primary);" id="btn-submit-deposito">
+          <i class="bi bi-check2"></i> Registrar Depósito
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL RÁPIDO: Selector de Cliente / Contribuyente Odoo -->
+  <div class="modal-backdrop-custom hidden" id="modal-select-citizen" role="dialog" aria-modal="true" aria-labelledby="modal-citizen-title">
+    <div class="modal-dialog-custom modal-md">
+      <div class="modal-header-custom">
+        <div class="d-flex align-items-center gap-2">
+          <div class="card-icon-badge" style="background: var(--odoo-primary-light); color: var(--odoo-primary);">
+            <i class="bi bi-people"></i>
+          </div>
+          <div>
+            <h6 id="modal-citizen-title" class="mb-0 fw-bold">Seleccionar Cliente / Contribuyente</h6>
+            <small class="text-muted" style="font-size: 0.72rem;">Búsqueda rápida por Cédula, RUC o Razón Social</small>
+          </div>
+        </div>
+        <button type="button" class="btn-close" data-close="modal-select-citizen" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body-custom">
+        <div class="odoo-search-wrap mb-3">
+          <i class="bi bi-search search-icon"></i>
+          <input type="text" id="citizen-modal-search" class="odoo-search-input" placeholder="Escriba Cédula, RUC o Nombre..." autofocus>
+        </div>
+        <div id="citizen-modal-results-list" style="max-height: 320px; overflow-y: auto;">
+          <!-- Inyectado por JS -->
+        </div>
+      </div>
+      <div class="modal-footer-custom">
+        <button class="btn btn-sm btn-outline-secondary" data-close="modal-select-citizen">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Configuración y Enganche con Odoo 19 Backend -->
+  <div class="modal-backdrop-custom hidden" id="modal-odoo-backend" role="dialog" aria-modal="true" aria-labelledby="modal-odoo-title">
+    <div class="modal-dialog-custom modal-md">
+      <div class="modal-header-custom">
+        <div class="d-flex align-items-center gap-2">
+          <div class="card-icon-badge" style="background: var(--odoo-primary-light); color: var(--odoo-primary);">
+            <i class="bi bi-hdd-network"></i>
+          </div>
+          <div>
+            <h6 id="modal-odoo-title" class="mb-0 fw-bold">Enganche con Odoo 19 Backend</h6>
+            <small class="text-muted" style="font-size: 0.72rem;">Configuración de conexión REST / JSON-RPC</small>
+          </div>
+        </div>
+        <button type="button" class="btn-close" data-close="modal-odoo-backend" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body-custom">
+        <div class="alert alert-info py-2 px-3 small mb-3">
+          <i class="bi bi-info-circle me-1"></i>
+          Los endpoints ya están listos en <code>pos_institucional_ec/controllers/main.py</code>. Para conectar con tu instancia real de Odoo 19, ajusta la URL y credenciales:
+        </div>
+        <div class="mb-2">
+          <label class="form-label small fw-bold text-muted">URL del Servidor Odoo 19:</label>
+          <input type="text" id="odoo-cfg-url" value="http://localhost:8069" class="form-control form-control-sm font-mono">
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-6">
+            <label class="form-label small fw-bold text-muted">Base de Datos:</label>
+            <input type="text" id="odoo-cfg-db" value="odoo19_institucional" class="form-control form-control-sm font-mono">
+          </div>
+          <div class="col-6">
+            <label class="form-label small fw-bold text-muted">Usuario / API:</label>
+            <input type="text" id="odoo-cfg-user" value="admin" class="form-control form-control-sm">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label small fw-bold text-muted">Contraseña o API Key:</label>
+          <input type="password" id="odoo-cfg-pass" value="admin" class="form-control form-control-sm">
+        </div>
+
+        <div class="p-2 border rounded bg-light mb-3" id="odoo-conn-status-box">
+          <div class="d-flex align-items-center justify-content-between small">
+            <span class="text-muted">Estado de Conexión:</span>
+            <span class="fw-bold text-warning" id="odoo-status-text">● Modo Simulado (Sin servidor activo)</span>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button class="btn btn-sm btn-outline-primary fw-bold flex-fill" id="btn-test-odoo-ping">
+            <i class="bi bi-arrow-repeat"></i> Probar Conexión (Ping a Odoo)
+          </button>
+          <button class="btn btn-sm text-white fw-bold flex-fill" id="btn-save-toggle-odoo" style="background: var(--odoo-secondary);">
+            <i class="bi bi-link-45deg"></i> <span id="btn-odoo-action-txt">Activar Odoo en Vivo</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer-custom">
+        <button class="btn btn-sm btn-outline-secondary" data-close="modal-odoo-backend">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICACIONES -->
+  <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    if (typeof bootstrap === 'undefined') {
+      document.write('<script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"><\/script>');
+    }
+  </script>
+  
+  <!-- Odoo API Bridge & App JS -->
+  <script src="odoo_api_config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

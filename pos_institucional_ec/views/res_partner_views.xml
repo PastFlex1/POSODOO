@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_pos_ec" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.pos.ec</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="before">
+                <field name="tipo_identificacion" widget="radio" options="{'horizontal': true}"/>
+                <field name="tipo_contribuyente"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <group string="Beneficios de Ley / Exoneraciones (Ecuador)">
+                    <field name="es_tercera_edad"/>
+                    <field name="es_discapacidad"/>
+                    <field name="porcentaje_discapacidad" invisible="not es_discapacidad"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

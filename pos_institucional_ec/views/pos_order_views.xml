@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_order_form_inherit_pos_ec" model="ir.ui.view">
+        <field name="name">pos.order.form.inherit.pos.ec</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="numero_recaudacion_institucional" readonly="1"/>
+                <field name="referencia_bancaria_pago" readonly="1"/>
+                <field name="banco_entidad" readonly="1"/>
+                <field name="estado_deposito_tesoreria" widget="badge" decoration-success="estado_deposito_tesoreria == 'conciliado'" decoration-warning="estado_deposito_tesoreria == 'pendiente'"/>
+                <field name="es_simulacion_sri" invisible="1"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Desglose Tributario y Presupuestario SRI">
+                    <group>
+                        <group string="Bases Imponibles">
+                            <field name="base_iva_0"/>
+                            <field name="base_iva_15"/>
+                            <field name="monto_iva_15"/>
+                            <field name="base_exenta"/>
+                            <field name="base_no_objeto"/>
+                        </group>
+                        <group string="Deducciones y Exoneraciones">
+                            <field name="total_exoneraciones"/>
+                            <field name="total_retenciones_aplicadas"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_deposito_user,pos.deposito.bancario.user,model_pos_deposito_bancario,point_of_sale.group_pos_user,1,1,1,0
+access_pos_deposito_manager,pos.deposito.bancario.manager,model_pos_deposito_bancario,point_of_sale.group_pos_manager,1,1,1,1
+access_pos_proforma_user,pos.proforma.user,model_pos_proforma,point_of_sale.group_pos_user,1,1,1,0
+access_pos_proforma_manager,pos.proforma.manager,model_pos_proforma,point_of_sale.group_pos_manager,1,1,1,1
+access_pos_proforma_line_user,pos.proforma.line.user,model_pos_proforma_line,point_of_sale.group_pos_user,1,1,1,0
+access_pos_proforma_line_manager,pos.proforma.line.manager,model_pos_proforma_line,point_of_sale.group_pos_manager,1,1,1,1

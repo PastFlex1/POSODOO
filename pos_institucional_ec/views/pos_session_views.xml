@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_session_form_inherit_pos_ec" model="ir.ui.view">
+        <field name="name">pos.session.form.inherit.pos.ec</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="Control de Arqueo y Tesorería Institucional">
+                    <group>
+                        <field name="fondo_sencillo_inicial"/>
+                        <field name="efectivo_esperado_gaveta"/>
+                        <field name="efectivo_contado_arqueo"/>
+                        <field name="diferencia_arqueo" decoration-danger="diferencia_arqueo != 0" decoration-success="diferencia_arqueo == 0"/>
+                    </group>
+                    <group>
+                        <field name="supervisor_tesoreria_id"/>
+                        <field name="observacion_turno"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

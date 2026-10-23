@@ -1,0 +1,1732 @@
+/* ==========================================================================
+   SHADCN UI KIT DARK THEME & ODOO 19 ENTERPRISE POS
+   Inspirado en el diseño ultra-moderno Shadcn UI Dark Finance Dashboard
+   Paleta: Obsidian (#090A0F), Card Dark (#12141C), Surface (#181B26)
+   Acentos: Emerald (#10B981), Cyan (#06B6D4), Odoo Teal (#017E84) & Aubergine (#714B67)
+   ========================================================================== */
+
+:root {
+  /* Odoo Enterprise Tokens */
+  --odoo-primary: #714B67;
+  --odoo-primary-dark: #4A2E43;
+  --odoo-primary-hover: #8A5B7E;
+  --odoo-primary-light: rgba(113, 75, 103, 0.22);
+  --odoo-primary-border: rgba(113, 75, 103, 0.45);
+
+  --odoo-secondary: #017E84;
+  --odoo-secondary-hover: #029B9E;
+  --odoo-secondary-dark: #005F63;
+  --odoo-secondary-light: rgba(1, 126, 132, 0.22);
+
+  /* Shadcn UI Dark Theme Core */
+  --odoo-bg: #090A0F;
+  --odoo-card-bg: #12141C;
+  --odoo-surface: #181B26;
+  --odoo-surface-hover: #222636;
+
+  --odoo-dark: #0D0F17;
+  --odoo-dark-header: #0D0F17;
+  --odoo-dark-card: #12141C;
+
+  --odoo-border: rgba(255, 255, 255, 0.08);
+  --odoo-border-subtle: rgba(255, 255, 255, 0.04);
+  --odoo-border-focus: #017E84;
+
+  --odoo-text-main: #F8FAFC;
+  --odoo-text-muted: #94A3B8;
+  --odoo-text-light: #64748B;
+  --odoo-text-white: #FFFFFF;
+
+  --odoo-success: #10B981;
+  --odoo-warning: #F59E0B;
+  --odoo-danger: #EF4444;
+  --odoo-info: #06B6D4;
+
+  /* Numpad tokens */
+  --numpad-btn-bg: #181B26;
+  --numpad-btn-border: rgba(255, 255, 255, 0.08);
+  --numpad-btn-hover: #252A3B;
+  --numpad-btn-active: #017E84;
+  --numpad-btn-active-text: #FFFFFF;
+
+  /* Tipografías */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, Monaco, monospace;
+
+  /* Dimensiones */
+  --header-height: 56px;
+  --banner-height: 32px;
+  --sidebar-width: 240px;
+  --border-radius: 12px;
+  --border-radius-sm: 8px;
+  --border-radius-lg: 16px;
+
+  /* Sombras y Glows Shadcn */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.6);
+  --shadow-glow-teal: 0 0 15px rgba(1, 126, 132, 0.25);
+  --shadow-glow-emerald: 0 0 15px rgba(16, 185, 129, 0.25);
+}
+
+/* ==========================================================================
+   RESET, SCROLLBAR & BASE
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--odoo-bg);
+  color: var(--odoo-text-main);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.font-mono {
+  font-family: var(--font-mono) !important;
+}
+
+/* ==========================================================================
+   1. BANNER OBLIGATORIO DE PROTOTIPO (SRI DEMO)
+   ========================================================================== */
+.proto-top-banner {
+  background: #0B0D13;
+  color: #94A3B8;
+  font-size: 0.72rem;
+  padding: 0.25rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  z-index: 1040;
+}
+
+.banner-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.banner-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge-sim {
+  background: rgba(239, 68, 68, 0.15);
+  color: #F87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.btn-tool-banner {
+  background: rgba(255, 255, 255, 0.06);
+  color: #F8FAFC;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-tool-banner:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFF;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   2. SHADCN DARK TOP NAVBAR & APP BAR
+   ========================================================================== */
+.odoo-top-navbar {
+  background: #0D0F17;
+  color: var(--odoo-text-white);
+  height: var(--header-height);
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  z-index: 1030;
+  position: sticky;
+  top: 0;
+}
+
+.odoo-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.odoo-app-switcher-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #F8FAFC;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.15rem;
+  transition: all 0.15s ease;
+}
+
+.odoo-app-switcher-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFF;
+}
+
+.odoo-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: #FFF;
+}
+
+.odoo-brand-logo {
+  display: flex;
+  align-items: center;
+}
+
+.odoo-brand-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.odoo-brand-subtitle {
+  font-size: 0.65rem;
+  color: var(--odoo-text-muted);
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Odoo Modules Bar (Pills estilo Shadcn) */
+.odoo-modules-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.odoo-module-link {
+  color: #94A3B8;
+  background: transparent;
+  border: none;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-decoration: none;
+}
+
+.odoo-module-link:hover {
+  color: #F8FAFC;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.odoo-module-link.active {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Right Section */
+.odoo-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.odoo-session-pill {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.odoo-badge-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+.odoo-badge-state.open {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.odoo-badge-state.closed {
+  background: rgba(239, 68, 68, 0.15);
+  color: #F87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.odoo-state-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse-dot 1.8s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.odoo-role-select {
+  background: #181B26;
+  color: #F8FAFC;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.odoo-role-select option {
+  background: #181B26;
+  color: #F8FAFC;
+}
+
+.odoo-user-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius-sm);
+  transition: background 0.15s ease;
+}
+
+.odoo-user-chip:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.odoo-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--odoo-secondary);
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   3. SHADCN APP LAYOUT & SIDEBAR
+   ========================================================================== */
+.pos-app-layout {
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - var(--header-height) - var(--banner-height));
+  width: 100%;
+}
+
+.pos-sidebar {
+  width: var(--sidebar-width);
+  background: #0D0F17;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: width 0.2s ease;
+}
+
+.pos-sidebar.hidden {
+  display: none !important;
+}
+
+.sidebar-section-title {
+  padding: 1rem 1rem 0.5rem 1rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--odoo-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.sidebar-nav-list {
+  list-style: none;
+  padding: 0 0.65rem;
+  margin: 0;
+  flex: 1;
+}
+
+.sidebar-nav-list li {
+  margin-bottom: 0.25rem;
+}
+
+.sidebar-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  border: none;
+  background: transparent;
+  border-radius: var(--border-radius-sm);
+  color: var(--odoo-text-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.sidebar-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #F8FAFC;
+}
+
+.sidebar-btn.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-weight: 600;
+}
+
+.sidebar-bottom-card {
+  padding: 0.85rem;
+  margin: 0.85rem;
+  background: var(--odoo-card-bg);
+  border: 1px solid var(--odoo-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.75rem;
+}
+
+.sb-card-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.sb-card-lbl {
+  color: var(--odoo-text-muted);
+}
+
+.sb-card-val {
+  font-weight: 600;
+  color: #F8FAFC;
+}
+
+.sb-card-footer {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  font-size: 0.68rem;
+  color: var(--odoo-text-light);
+}
+
+.pos-workspace {
+  flex: 1;
+  background: var(--odoo-bg);
+  padding: 0.85rem;
+  overflow-y: auto;
+  outline: none;
+}
+
+/* ==========================================================================
+   4. SHADCN POINT OF SALE (POS) SPLIT SCREEN
+   ========================================================================== */
+.odoo-pos-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--header-height) - var(--banner-height) - 1.7rem);
+  gap: 0.65rem;
+}
+
+/* Sub-Barra de Control */
+.odoo-pos-subbar {
+  background: var(--odoo-card-bg);
+  border: 1px solid var(--odoo-border);
+  border-radius: var(--border-radius-sm);
+  padding: 0.5rem 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.pos-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.btn-odoo-tool {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #F8FAFC;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.78rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-odoo-tool:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #FFF;
+}
+
+.btn-odoo-tool.btn-odoo-primary {
+  background: linear-gradient(135deg, #017E84, #059669);
+  color: #FFF;
+  border: none;
+  box-shadow: var(--shadow-glow-teal);
+}
+
+.btn-odoo-tool.btn-odoo-primary:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.odoo-kbd {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-odoo-primary .odoo-kbd {
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFF;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Selector de Modos Shadcn */
+.odoo-mode-pills {
+  display: inline-flex;
+  background: #090A0F;
+  padding: 0.2rem;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--odoo-border);
+}
+
+.odoo-mode-btn {
+  border: none;
+  background: transparent;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  color: var(--odoo-text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.odoo-mode-btn.active {
+  background: #181B26;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ODOO POS SPLIT GRID */
+.odoo-pos-grid {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: 0.75rem;
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 1080px) {
+  .odoo-pos-grid {
+    grid-template-columns: 390px 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .odoo-pos-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+}
+
+/* ==========================================================================
+   5. COLUMNA IZQUIERDA: TICKET / ORDEN Y NUMPAD SHADCN
+   ========================================================================== */
+.odoo-pos-left {
+  background: var(--odoo-card-bg);
+  border: 1px solid var(--odoo-border);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+/* 5.1 Barra de Selección de Contribuyente */
+.odoo-customer-bar {
+  padding: 0.65rem 0.85rem;
+  background: #0F111A;
+  border-bottom: 1px solid var(--odoo-border);
+}
+
+.btn-select-customer {
+  width: 100%;
+  border: 1.5px dashed rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--border-radius-sm);
+  padding: 0.55rem 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  color: #F8FAFC;
+}
+
+.btn-select-customer:hover {
+  border-color: var(--odoo-secondary);
+  background: rgba(1, 126, 132, 0.12);
+  color: #FFF;
+}
+
+.customer-active-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: rgba(1, 126, 132, 0.14);
+  border: 1px solid rgba(1, 126, 132, 0.35);
+  border-radius: var(--border-radius-sm);
+  padding: 0.5rem 0.85rem;
+}
+
+.customer-info-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.customer-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--odoo-secondary);
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.customer-text-name {
+  font-weight: 700;
+  font-size: 0.8125rem;
+  color: #FFFFFF;
+}
+
+.customer-text-meta {
+  font-size: 0.7rem;
+  color: var(--odoo-text-muted);
+}
+
+.btn-customer-clear {
+  background: transparent;
+  border: none;
+  color: var(--odoo-text-muted);
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+}
+
+.btn-customer-clear:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--odoo-danger);
+}
+
+/* 5.2 Lista de Líneas de Orden */
+.odoo-orderlines-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 0.75rem;
+  background: #0B0D13;
+}
+
+.odoo-empty-ticket {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #64748B;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.odoo-empty-ticket i, .odoo-empty-ticket svg {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: #334155;
+}
+
+.odoo-orderline {
+  background: var(--odoo-card-bg);
+  border: 1px solid var(--odoo-border);
+  border-radius: var(--border-radius-sm);
+  padding: 0.6rem 0.85rem;
+  margin-bottom: 0.45rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.odoo-orderline:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: #181B26;
+}
+
+.odoo-orderline.selected {
+  border-color: var(--odoo-secondary);
+  background: rgba(1, 126, 132, 0.15);
+  box-shadow: 0 0 0 1px var(--odoo-secondary);
+}
+
+.orderline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.orderline-title {
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: #F8FAFC;
+  line-height: 1.25;
+}
+
+.orderline-total {
+  font-weight: 700;
+  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+
+.orderline-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--odoo-text-muted);
+}
+
+.orderline-qty-info {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.orderline-tax-badge {
+  font-size: 0.65rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+.orderline-tax-0 {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.orderline-tax-15 {
+  background: rgba(6, 182, 212, 0.12);
+  color: #22D3EE;
+  border: 1px solid rgba(6, 182, 212, 0.25);
+}
+
+.orderline-tax-exento {
+  background: rgba(245, 158, 11, 0.12);
+  color: #FBBF24;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.orderline-tax-noobjeto {
+  background: rgba(168, 85, 247, 0.12);
+  color: #C084FC;
+  border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+/* 5.3 Resumen Financiero del POS */
+.odoo-ticket-summary {
+  background: #0F111A;
+  border-top: 1px solid var(--odoo-border);
+  padding: 0.55rem 0.85rem;
+}
+
+.ticket-sum-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.76rem;
+  margin-bottom: 0.2rem;
+  color: var(--odoo-text-muted);
+}
+
+.ticket-sum-row.discount {
+  color: #F87171;
+}
+
+.ticket-sum-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-top: 0.35rem;
+  padding-top: 0.45rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+}
+
+.ticket-sum-total .val {
+  color: #10B981;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+/* 5.4 TECLADO ODOO TOUCH NUMPAD */
+.odoo-action-numpad {
+  display: grid;
+  grid-template-columns: 105px 1fr;
+  background: #0B0D13;
+  border-top: 1px solid var(--odoo-border);
+  padding: 0.5rem;
+  gap: 0.5rem;
+}
+
+.numpad-modes {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  gap: 0.35rem;
+}
+
+.btn-numpad-mode {
+  background: var(--numpad-btn-bg);
+  border: 1px solid var(--numpad-btn-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  padding: 0.4rem 0.2rem;
+}
+
+.btn-numpad-mode:hover {
+  background: var(--numpad-btn-hover);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-numpad-mode.active {
+  background: var(--odoo-primary);
+  color: #FFF;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 10px rgba(113, 75, 103, 0.4);
+}
+
+.numpad-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 0.35rem;
+}
+
+.btn-numpad-key {
+  background: var(--numpad-btn-bg);
+  border: 1px solid var(--numpad-btn-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.btn-numpad-key:hover {
+  background: var(--numpad-btn-hover);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.btn-numpad-key:active {
+  transform: scale(0.96);
+  background: #2D3347;
+}
+
+/* 5.5 BOTÓN PRINCIPAL DE COBRO / PAGO */
+.odoo-btn-pay-block {
+  padding: 0.65rem 0.85rem;
+  background: var(--odoo-card-bg);
+  border-top: 1px solid var(--odoo-border);
+}
+
+.btn-odoo-checkout {
+  width: 100%;
+  background: linear-gradient(135deg, #017E84, #059669);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: 0.8rem 1.15rem;
+  font-size: 1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: var(--shadow-glow-teal);
+}
+
+.btn-odoo-checkout:hover {
+  opacity: 0.94;
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(1, 126, 132, 0.45);
+}
+
+.btn-odoo-checkout:active {
+  transform: translateY(1px);
+}
+
+/* ==========================================================================
+   6. COLUMNA DERECHA: CATÁLOGO DE PRODUCTOS / CONCEPTOS
+   ========================================================================== */
+.odoo-pos-right {
+  background: var(--odoo-card-bg);
+  border: 1px solid var(--odoo-border);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+/* Barra Superior de Búsqueda y Categorías */
+.odoo-catalog-header {
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid var(--odoo-border);
+  background: #0F111A;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.odoo-search-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.odoo-search-wrap .search-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748B;
+  font-size: 0.9rem;
+}
+
+.odoo-search-input {
+  width: 100%;
+  border: 1px solid var(--odoo-border);
+  background: var(--odoo-surface);
+  color: #F8FAFC;
+  border-radius: 9999px;
+  padding: 0.45rem 1rem 0.45rem 2.25rem;
+  font-size: 0.8125rem;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.odoo-search-input:focus {
+  border-color: var(--odoo-secondary);
+  background: #1C202E;
+  box-shadow: 0 0 0 3px rgba(1, 126, 132, 0.2);
+}
+
+/* Pastillas de Categoría */
+.odoo-categories-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.15rem;
+}
+
+.odoo-category-pill {
+  border: 1px solid var(--odoo-border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--odoo-text-muted);
+  border-radius: 9999px;
+  padding: 0.25rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.odoo-category-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFF;
+}
+
+.odoo-category-pill.active {
+  background: #FFFFFF;
+  color: #090A0F;
+  border-color: #FFFFFF;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.15);
+}
+
+/* Grid de Tarjetas de Conceptos */
+.odoo-products-grid {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 0.65rem;
+  align-content: start;
+  background: #0B0D13;
+}
+
+.odoo-product-card {
+  background: var(--odoo-card-bg);
+  border: 1px solid var(--odoo-border);
+  border-radius: var(--border-radius-sm);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 125px;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.odoo-product-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(1, 126, 132, 0.5);
+  background: #181B26;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.odoo-product-card:active {
+  transform: scale(0.97);
+}
+
+.card-top-icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.card-icon-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(1, 126, 132, 0.15);
+  color: #22D3EE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.card-product-title {
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: #F8FAFC;
+  line-height: 1.25;
+  margin-bottom: 0.35rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-product-code {
+  font-size: 0.65rem;
+  color: var(--odoo-text-muted);
+  font-family: var(--font-mono);
+}
+
+.card-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.45rem;
+  padding-top: 0.35rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.card-product-price {
+  font-weight: 800;
+  font-size: 0.95rem;
+  font-family: var(--font-mono);
+  color: #10B981;
+}
+
+.card-product-tax {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.1rem 0.35rem;
+  border-radius: 9999px;
+}
+
+/* ==========================================================================
+   7. MODAL DE PAGO / COBRO
+   ========================================================================== */
+.odoo-payment-dialog {
+  max-width: 680px;
+}
+
+.pay-tender-header {
+  background: linear-gradient(135deg, #714B67, #4A2E43);
+  color: #FFFFFF;
+  padding: 1rem 1.25rem;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tender-total-label {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tender-total-val {
+  font-size: 1.65rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: #10B981;
+}
+
+.odoo-pay-methods-pills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.btn-pay-method-pill {
+  border: 1px solid var(--odoo-border);
+  background: var(--odoo-surface);
+  color: #F8FAFC;
+  border-radius: var(--border-radius-sm);
+  padding: 0.65rem 0.5rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.btn-pay-method-pill:hover {
+  background: var(--odoo-surface-hover);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-pay-method-pill.active {
+  border-color: var(--odoo-secondary);
+  background: rgba(1, 126, 132, 0.18);
+  color: #22D3EE;
+  box-shadow: 0 0 10px rgba(1, 126, 132, 0.3);
+}
+
+.cash-quick-denoms {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+}
+
+.btn-quick-cash {
+  border: 1px solid var(--odoo-border);
+  background: var(--odoo-surface);
+  color: #F8FAFC;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.btn-quick-cash:hover {
+  background: var(--odoo-surface-hover);
+  border-color: var(--odoo-secondary);
+  color: var(--odoo-secondary);
+}
+
+.change-due-box {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--border-radius-sm);
+  padding: 0.65rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+}
+
+.change-due-lbl {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #34D399;
+}
+
+.change-due-val {
+  font-size: 1.25rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: #34D399;
+}
+
+/* ==========================================================================
+   8. COMPROBANTE OFICIAL IMPRIMIBLE (THERMAL VOUCHER)
+   ========================================================================== */
+.official-ticket-paper {
+  background: #FFFFFF !important;
+  color: #111111 !important;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1.4;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.official-ticket-paper * {
+  color: #111111;
+}
+
+.official-ticket-paper .text-muted {
+  color: #555555 !important;
+}
+
+.official-ticket-paper .text-primary {
+  color: #0288D1 !important;
+}
+
+.official-ticket-paper .text-success {
+  color: #0F5132 !important;
+}
+
+.ticket-header-box {
+  text-align: center;
+  margin-bottom: 0.85rem;
+}
+
+.ticket-rep-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.ticket-entity-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ticket-entity-sub {
+  font-size: 0.68rem;
+  color: #555;
+}
+
+.ticket-ruc-sim {
+  font-size: 0.65rem;
+  color: #666;
+}
+
+.ticket-line-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.ticket-divider-dash {
+  border-top: 1px dashed #333;
+  margin: 0.5rem 0;
+}
+
+.ticket-divider-double {
+  border-top: 2px double #333;
+  margin: 0.5rem 0;
+}
+
+.ticket-total-large {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 0.35rem 0;
+}
+
+.ticket-barcode-sim {
+  text-align: center;
+  font-size: 1.8rem;
+  letter-spacing: 4px;
+  margin: 0.75rem 0 0.25rem 0;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .official-ticket-paper, .official-ticket-paper * {
+    visibility: visible;
+  }
+  .official-ticket-paper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80mm !important;
+    max-width: 80mm !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   9. VISTAS DE MÓDULOS: PROFORMAS, FACTURACIÓN, TESORERÍA, CONTABILIDAD
+   ========================================================================== */
+.odoo-view-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.odoo-control-panel {
+  background: var(--odoo-card-bg);
+  border: 1px solid var(--odoo-border);
+  border-radius: var(--border-radius);
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.odoo-breadcrumb {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.odoo-stat-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.85rem;
+}
+
+.odoo-stat-card {
+  background: var(--odoo-card-bg);
+  border: 1px solid var(--odoo-border);
+  border-radius: var(--border-radius);
+  padding: 1.15rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.odoo-stat-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.stat-card-left .stat-lbl {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--odoo-text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+  display: block;
+}
+
+.stat-card-left .stat-val {
+  font-size: 1.55rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+}
+
+.stat-icon {
+  font-size: 1.75rem;
+}
+
+/* Tablas Shadcn Dark */
+.odoo-table-wrap {
+  background: var(--odoo-card-bg);
+  border: 1px solid var(--odoo-border);
+  border-radius: var(--border-radius);
+  overflow-x: auto;
+  box-shadow: var(--shadow-sm);
+}
+
+.odoo-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.odoo-table th {
+  background: #0F111A;
+  color: var(--odoo-text-muted);
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--odoo-border);
+  text-align: left;
+}
+
+.odoo-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #F8FAFC;
+  vertical-align: middle;
+}
+
+.odoo-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.odoo-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ==========================================================================
+   10. TOAST NOTIFICACIONES SHADCN
+   ========================================================================== */
+.toast-stack {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.toast-msg {
+  background: #181B26;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-left: 4px solid var(--odoo-secondary);
+  border-radius: var(--border-radius-sm);
+  padding: 0.75rem 1.15rem;
+  min-width: 280px;
+  max-width: 380px;
+  font-size: 0.8125rem;
+  color: #FFFFFF;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  pointer-events: auto;
+}
+
+.toast-msg.toast-success {
+  border-left-color: #10B981;
+}
+
+.toast-msg.toast-error {
+  border-left-color: #EF4444;
+}
+
+.toast-msg.toast-warning {
+  border-left-color: #F59E0B;
+}
+
+/* ==========================================================================
+   11. MODALES SHADCN DARK
+   ========================================================================== */
+.modal-backdrop-custom {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: 1rem;
+}
+
+.modal-backdrop-custom.hidden,
+.hidden {
+  display: none !important;
+}
+
+.modal-dialog-custom {
+  background: #12141C;
+  border-radius: var(--border-radius);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+  width: 100%;
+  max-width: 520px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  animation: modalIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #F8FAFC;
+}
+
+.modal-dialog-custom.modal-lg {
+  max-width: 780px;
+}
+
+.modal-dialog-custom.modal-sm {
+  max-width: 440px;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-header-custom {
+  padding: 0.95rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #181B26;
+}
+
+.modal-body-custom {
+  padding: 1.25rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  color: #F8FAFC;
+}
+
+.modal-footer-custom {
+  padding: 0.85rem 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: #181B26;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
+   12. OVERRIDES BOOTSTRAP 5 PARA COMPATIBILIDAD DARK PERFECTA
+   ========================================================================== */
+.form-control, .form-select {
+  background-color: #181B26 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #F8FAFC !important;
+  border-radius: var(--border-radius-sm) !important;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--odoo-secondary) !important;
+  box-shadow: 0 0 0 3px rgba(1, 126, 132, 0.25) !important;
+  background-color: #1E2232 !important;
+}
+
+.form-control[readonly], .bg-light {
+  background-color: #0F111A !important;
+  color: #94A3B8 !important;
+}
+
+.input-group-text {
+  background-color: #0F111A !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #94A3B8 !important;
+}
+
+.btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.card {
+  background-color: var(--odoo-card-bg) !important;
+  border-color: var(--odoo-border) !important;
+  color: #F8FAFC !important;
+}
+
+.border {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.text-dark {
+  color: #F8FAFC !important;
+}
+
+.text-muted {
+  color: #94A3B8 !important;
+}
+
+/* Badges redondeados estilo Shadcn Pill */
+.badge {
+  border-radius: 9999px !important;
+  font-weight: 600 !important;
+  padding: 0.25rem 0.65rem !important;
+}
+
+.badge.bg-success {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #34D399 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+.badge.bg-primary {
+  background: rgba(6, 182, 212, 0.15) !important;
+  color: #22D3EE !important;
+  border: 1px solid rgba(6, 182, 212, 0.3) !important;
+}
+
+.badge.bg-danger {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #F87171 !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+.badge.bg-secondary {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #CBD5E1 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+body:not(.printing) .bg-white:not(.official-ticket-paper):not(.official-ticket-paper *) {
+  background-color: var(--odoo-card-bg) !important;
+  color: #F8FAFC !important;
+}
+
+body:not(.printing) .table {
+  color: #F8FAFC !important;
+}
+
+body:not(.printing) .table td, body:not(.printing) .table th {
+  background-color: transparent !important;
+  color: inherit !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}

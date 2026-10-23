@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_product_template_form_inherit_pos_ec" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.pos.ec</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="point_of_sale.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='pos']" position="inside">
+                <group string="Clasificación Institucional y Presupuestaria (Ecuador)">
+                    <group>
+                        <field name="codigo_institucional"/>
+                        <field name="categoria_pos_institucional"/>
+                        <field name="tratamiento_tributario"/>
+                        <field name="unidad_responsable"/>
+                    </group>
+                    <group>
+                        <field name="partida_presupuestaria"/>
+                        <field name="cuenta_contable_institucional"/>
+                        <field name="aplica_exoneracion_tercera_edad"/>
+                        <field name="porcentaje_rebaja_autorizada" invisible="not aplica_exoneracion_tercera_edad"/>
+                        <field name="motivo_exoneracion" invisible="not aplica_exoneracion_tercera_edad"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista List/Tree de Proformas -->
+    <record id="view_pos_proforma_tree" model="ir.ui.view">
+        <field name="name">pos.proforma.tree</field>
+        <field name="model">pos.proforma</field>
+        <field name="arch" type="xml">
+            <list string="Proformas y Cotizaciones de Ventanilla" decoration-info="state == 'borrador'" decoration-success="state == 'facturado'" decoration-muted="state == 'cancelado'">
+                <field name="name"/>
+                <field name="fecha_emision"/>
+                <field name="partner_id"/>
+                <field name="fecha_vencimiento"/>
+                <field name="subtotal_bruto" sum="Total Bruto"/>
+                <field name="total_descuento" sum="Total Descuentos"/>
+                <field name="monto_iva" sum="Total IVA"/>
+                <field name="total" sum="Total Cotizado"/>
+                <field name="state" widget="badge" decoration-info="state == 'borrador'" decoration-success="state == 'facturado'" decoration-danger="state == 'vencido'"/>
+                <field name="order_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista Form de Proforma -->
+    <record id="view_pos_proforma_form" model="ir.ui.view">
+        <field name="name">pos.proforma.form</field>
+        <field name="model">pos.proforma</field>
+        <field name="arch" type="xml">
+            <form string="Proforma / Cotización Institucional">
+                <header>
+                    <button name="action_convert_to_order" string="Convertir en Factura y Cobrar" type="object" class="btn-primary" invisible="state != 'borrador'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="borrador,facturado"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Número de Proforma"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Datos del Contribuyente">
+                            <field name="partner_id" widget="res_partner_many2one" context="{'show_vat': True}"/>
+                            <field name="fecha_emision" readonly="1"/>
+                            <field name="fecha_vencimiento"/>
+                        </group>
+                        <group string="Control y Referencia">
+                            <field name="currency_id" invisible="1"/>
+                            <field name="order_id" invisible="not order_id"/>
+                            <field name="observacion"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Conceptos y Trámites Cotizados">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="partida_presupuestaria"/>
+                                    <field name="cuenta_contable_institucional"/>
+                                    <field name="tratamiento_tributario"/>
+                                    <field name="qty"/>
+                                    <field name="price_unit"/>
+                                    <field name="discount_amount"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="price_tax"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="subtotal_bruto" widget="monetary"/>
+                                <field name="total_descuento" widget="monetary"/>
+                                <field name="monto_iva" widget="monetary"/>
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="total"/>
+                                </div>
+                                <field name="total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Acción de Ventana para Proformas -->
+    <record id="action_pos_proforma" model="ir.actions.act_window">
+        <field name="name">Proformas y Cotizaciones</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pos.proforma</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Cree una nueva cotización previa o proforma para un contribuyente.
+            </p>
+            <p>
+                Permite emitir cotizaciones válidas con desglose presupuestario y tributario que luego pueden convertirse en una orden de cobro en el POS con un solo clic.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menú de Proformas en Punto de Venta -->
+    <menuitem
+        id="menu_pos_proforma"
+        name="Proformas / Cotizaciones"
+        parent="point_of_sale.menu_point_of_sale"
+        action="action_pos_proforma"
+        sequence="15"/>
+</odoo>

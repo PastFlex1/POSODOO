@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- 1. Aviso de Simulación SRI en la Barra Superior de Odoo 19 -->
+    <t t-name="pos_institucional_ec.NavbarDisclaimer" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos-branding')]" position="after">
+            <div class="d-flex align-items-center ms-3">
+                <span class="pos-badge-simulation">
+                    SIMULACIÓN INSTITUCIONAL — SIN VALIDEZ TRIBUTARIA (SRI)
+                </span>
+            </div>
+        </xpath>
+    </t>
+
+    <!-- 2. Cajón de Trazabilidad Presupuestaria y Contable -->
+    <t t-name="pos_institucional_ec.BudgetTraceability">
+        <div class="budget-traceability-drawer">
+            <div class="d-flex justify-content-between align-items-center" role="button" t-on-click="toggleOpen" style="cursor: pointer;">
+                <div class="d-flex align-items-center gap-2 fw-bold text-dark">
+                    <i class="fa fa-sitemap text-primary"></i>
+                    <span>Trazabilidad Presupuestaria y Contable (Ecuador)</span>
+                </div>
+                <div class="small text-muted">
+                    <i t-att-class="state.isOpen ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+                </div>
+            </div>
+
+            <t t-if="state.isOpen">
+                <div class="mt-2 pt-2 border-top">
+                    <table class="table table-sm table-bordered bg-white small mb-1">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Trámite / Concepto</th>
+                                <th>Partida Presupuestaria</th>
+                                <th>Cuenta Contable</th>
+                                <th>Unidad Responsable</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="orderlines" t-as="line" t-key="line.id">
+                                <tr>
+                                    <td><t t-esc="line.get_full_product_name()"/></td>
+                                    <td class="font-monospace"><t t-esc="line.partida_presupuestaria"/></td>
+                                    <td class="font-monospace"><t t-esc="line.cuenta_contable_institucional"/></td>
+                                    <td><t t-esc="line.unidad_responsable"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <!-- 3. Botones de Cobro Rápido en la Pantalla de Pago Odoo 19 -->
+    <t t-name="pos_institucional_ec.PaymentScreenQuickCash" t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('payment-numpad')]" position="before">
+            <div class="quick-cash-tender mb-2">
+                <button class="btn-tender" t-on-click="() => this.setQuickCashTender('EXACT')">Monto Exacto</button>
+                <button class="btn-tender" t-on-click="() => this.setQuickCashTender('5')">$5.00</button>
+                <button class="btn-tender" t-on-click="() => this.setQuickCashTender('10')">$10.00</button>
+                <button class="btn-tender" t-on-click="() => this.setQuickCashTender('20')">$20.00</button>
+                <button class="btn-tender" t-on-click="() => this.setQuickCashTender('50')">$50.00</button>
+                <button class="btn-tender" t-on-click="() => this.setQuickCashTender('100')">$100.00</button>
+            </div>
+            <t t-if="cambioVuelto > 0">
+                <div class="alert alert-success d-flex justify-content-between align-items-center py-2 px-3 mb-2 small fw-bold">
+                    <span>Cambio / Vuelto a Entregar:</span>
+                    <span class="fs-6 font-monospace">$<t t-esc="cambioVuelto.toFixed(2)"/></span>
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+    <!-- 4. Recibo Oficial Odoo POS con Advertencia del SRI -->
+    <t t-name="pos_institucional_ec.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos-receipt-header')]" position="after">
+            <div class="text-center my-2 p-1 border border-danger text-danger fw-bold" style="font-size: 0.65rem;">
+                DEMOSTRACIÓN INSTITUCIONAL — SIN VALIDEZ TRIBUTARIA ANTE EL SRI
+            </div>
+        </xpath>
+    </t>
+
+</templates>

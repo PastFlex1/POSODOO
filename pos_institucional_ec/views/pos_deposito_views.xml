@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_deposito_bancario_tree" model="ir.ui.view">
+        <field name="name">pos.deposito.bancario.tree</field>
+        <field name="model">pos.deposito.bancario</field>
+        <field name="arch" type="xml">
+            <list string="Depósitos Bancarios Institucionales">
+                <field name="name"/>
+                <field name="fecha_deposito"/>
+                <field name="banco"/>
+                <field name="numero_papeleta"/>
+                <field name="monto" sum="Total Depositado"/>
+                <field name="usuario_responsable_id"/>
+                <field name="estado" widget="badge" decoration-success="estado == 'conciliado'" decoration-warning="estado == 'borrador'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pos_deposito_bancario_form" model="ir.ui.view">
+        <field name="name">pos.deposito.bancario.form</field>
+        <field name="model">pos.deposito.bancario</field>
+        <field name="arch" type="xml">
+            <form string="Depósito Bancario Institucional">
+                <header>
+                    <field name="estado" widget="statusbar" statusbar_visible="borrador,conciliado"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Detalles de la Remesa">
+                            <field name="banco"/>
+                            <field name="numero_papeleta"/>
+                            <field name="monto"/>
+                            <field name="fecha_deposito"/>
+                        </group>
+                        <group string="Responsabilidad y Control">
+                            <field name="session_id"/>
+                            <field name="usuario_responsable_id"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Observaciones">
+                            <field name="observacion" placeholder="Detalle de la remesa, precinto de la valija bancaria o comprobante de entrega en ventanilla bancaria..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pos_deposito_bancario" model="ir.actions.act_window">
+        <field name="name">Depósitos Bancarios (BCE)</field>
+        <field name="res_model">pos.deposito.bancario</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Registrar el primer depósito bancario en la Cuenta Rotativa Única BCE.
+            </p>
+        </field>
+    </record>
+</odoo>
